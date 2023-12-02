@@ -19,5 +19,7 @@
     <!-- Fontawesome Css -->
     <link href="{{'aset/css/fontawesome-all.css'}}" rel="stylesheet">
     <!--// Fontawesome Css -->
-   
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+
+
 </head>

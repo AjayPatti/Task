@@ -9,7 +9,7 @@
            
             <ul class="list-unstyled components">
                 <li class="active">
-                    <a href="dashborad.php">
+                    <a href="{{route('customer')}}">
                         <i class="fa fa-user" id="cl"></i>Customers
                        
 

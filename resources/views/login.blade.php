@@ -30,16 +30,16 @@
         <div class="col-sm-3"></div>
         <div class="col-sm-6 mt-5"style="background-color:white";>
             <!-- Default form login -->
-<form class="text-center  p-5" action="loginpage.php" method="post">
-
+<form class="text-center  p-5" action="{{route('login')}}" method="post" id="form">
+@csrf
 <p class="h4 mb-4">Login</p>
 
 <!-- Email -->
 <input type="email"  name="email" class="form-control mb-4" placeholder="E-mail">
-
+<span id="email_error" class=" text-danger" style="margin-left: -253px;"></span>
 <!-- Password -->
 <input type="password" name="password" class="form-control mb-4" placeholder="Password">
-
+<span id="password_error" class="text-danger" style="margin-left: -228px;"></span>
 <div class="d-flex justify-content-around">
     <div>
         <!-- Remember me -->
@@ -75,7 +75,38 @@
         </div>
     </div>
 </div>
-   
+
+<script>
+// $(document).ready(function(){
+// $("#form").on('submit',function(e){
+//     e.preventDefault();
+//     $.ajax({
+//         url: "{{route('login')}}", 
+//         data: $("#form").serialize(), 
+//         type: "post", 
+//         dataType: 'json',
+//         success: function (e) {
+//             console.log(JSON.stringify(e));
+
+
+//         },
+//         error:function(e){
+
+//             // var response = e.responseJSON.errors;
+//             // $.each(response, function(key, val) {
+//             //     console.log(val);
+//             //     $("#" + key + "_error").text(val[0]);
+//             // })
+
+
+
+//         }
+//     }); 
+//     return false;
+// });
+// });
+
+</script>
 </body>
 
 </html>
