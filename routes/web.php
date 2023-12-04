@@ -2,9 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\LoginController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\AdminController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,9 +18,23 @@ use App\Http\Controllers\CustomerController;
 */
 
 Route::get('/login',[LoginController::class,'index']);
-Route::get('/register',[RegisterController::class,'Register'])->name('register');
-Route::post('/store',[RegisterController::class,'Store'])->name('register-store');
-Route::post('/login',[LoginController::class,'Login'])->name('login');
 
-Route::get('/dashboard',[HomeController::class,'index'])->name('dashboard');
-Route::get('/customer',[CustomerController::class,'Customer'])->name('customer');
+
+Auth::routes();
+Route::post('/login',[LoginController::class,'loginSecond'])->name('login');
+Route::get('/register',[RegisterController::class,'Register'])->name('register');
+Route::post('/store',[RegisterController::class,'Store'])->name('store');
+
+
+Route::group(['middleware'=>['web','isAdmin']],function(){
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+    Route::get('/customer',[AdminController::class,'Customer'])->name('customer');
+    Route::get('/add',[AdminController::class,'add'])->name('add');
+    Route::get('/edit',[AdminController::class,'edit'])->name('edit');
+    Route::post('/add-store',[AdminController::class,'AddCustomer'])->name('add-customer');
+    Route::post('/approve',[AdminController::class,'ApproveStatus'])->name('approve-status');
+    Route::post('/reject',[AdminController::class,'Reject'])->name('reject');
+    // Route::get('/dashboard',[AdminController::class,'dashboard']);
+    Route::get('/logout',[LoginController::class,'logout'])->name('logout');
+});

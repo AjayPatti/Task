@@ -25,11 +25,8 @@
                     </a>
                 </li>
                 <li class="active">
-                    <a href="../online college.php">
-                        <i class="fa fa-user" id="cl"></i>LOG-OUT
-                       
-
-                    </a>
+                <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
+                                      
                 </li>
                
                 </ul>

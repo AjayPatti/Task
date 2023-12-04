@@ -59,11 +59,12 @@ $(document).ready(function(){
 $("#form").on('submit',function(e){
     e.preventDefault();
     $.ajax({
-        url: "{{route('register-store')}}", 
+        url: "{{route('store')}}", 
         data: $("#form").serialize(), 
         type: "post", 
         dataType: 'json',
-        success: function (e) {
+        success: function (res) {
+     
             console.log(JSON.stringify(e));
 
 
