@@ -30,7 +30,12 @@
         <div class="col-sm-2"></div>
         <div class="col-sm-7 mt-5"style="background-color:white";>
             <!-- Default form login -->
-<form class="text-center  p-5" action="{{route('login')}}" method="post" id="form">
+            @if(session()->has('message'))
+            <div class="alert alert-success">
+        {{ session()->get('message') }}
+            </div>
+        @endif
+<form class="text-center  p-5" action="#" method="post" id="form">
 @csrf
 <p class="h4 mb-4">Login</p>
 
@@ -100,34 +105,33 @@
 </div>
 
 <script>
-// $(document).ready(function(){
-// $("#form").on('submit',function(e){
-//     e.preventDefault();
-//     $.ajax({
-//         url: "{{route('login')}}", 
-//         data: $("#form").serialize(), 
-//         type: "post", 
-//         dataType: 'json',
-//         success: function (e) {
-//             console.log(JSON.stringify(e));
+$(document).ready(function(){
+$("#form").on('submit',function(e){
+    e.preventDefault();
+    $.ajax({
+        url: "{{route('login')}}", 
+        data: $("#form").serialize(), 
+        type: "post", 
+        success: function (e) {
+            console.log(JSON.stringify(e));
 
 
-//         },
-//         error:function(e){
+        },
+        error:function(e){
 
-//             // var response = e.responseJSON.errors;
-//             // $.each(response, function(key, val) {
-//             //     console.log(val);
-//             //     $("#" + key + "_error").text(val[0]);
-//             // })
+            // var response = e.responseJSON.errors;
+            // $.each(response, function(key, val) {
+            //     console.log(val);
+            //     $("#" + key + "_error").text(val[0]);
+            // })
 
 
 
-//         }
-//     }); 
-//     return false;
-// });
-// });
+        }
+    }); 
+    return false;
+});
+});
 
 </script>
 </body>

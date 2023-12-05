@@ -41,6 +41,7 @@ class RegisterController extends Controller
         $data=[
             'name' => $request['name'],
             'email' => $request['email'],
+            'login_type'=>'admin',
             'password' => Hash::make($request['password']),
 
         ];

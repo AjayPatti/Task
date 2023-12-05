@@ -12,8 +12,12 @@ class AdminController extends Controller
     public function Customer(Request $request){
         $login_id =Auth::user()->id;
         $login_type=Auth::user()->login_type;
-        $data =User::where('user_id',$login_id)->get();
-        
+
+        if($login_type =='user'){
+            $data =User::where('user_id',$login_id)->get();
+        }else{
+            $data =User::where('user_id',$login_id)->get();
+        }
         return view('customer',compact('data','login_type'));
     }
     public function add(){
@@ -22,9 +26,9 @@ class AdminController extends Controller
     public function AddCustomer(Request $request){
        
         $request->validate([
-            'name' =>'required',
-            'email' =>'required',
-            'password' =>'required',
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8'],
         ]);
 
         try{
@@ -38,7 +42,7 @@ class AdminController extends Controller
             ];
           $insert =  User::create($data);  
           if($insert != false){
-            return redirect('customer');
+            return ['status'=> true];
           }  
 
         }catch(\Exception $e){
@@ -52,7 +56,7 @@ class AdminController extends Controller
         'approve_status' => '1',
     ]);
         if($approve != false){
-            echo " approved succesfully done";
+           return ['status'=>true];
         }
     }
     public function edit(Request $request){
@@ -61,9 +65,9 @@ class AdminController extends Controller
         $data =User::where('id',$id)->get();
         return $data;
     }
-    public function upStore(Request $request){
+    public function UpdateStore(Request $request){
 
-        $email =$request->eamil;
+        $email =$request->email;
         $name =$request->name;
         $id =$request->id;
         $approve=User::where('id',$id)->update([
@@ -71,8 +75,7 @@ class AdminController extends Controller
          'name' => $name,
      ]);
          if($approve != false){
-             echo " approved succesfully done";
-             return back()->with('msg', 'approved succesfully done');
+              return['status' =>true];
          }
      }
      public function Reject(Request $request){
@@ -82,8 +85,12 @@ class AdminController extends Controller
          'reject' => '0',
      ]);
          if($approve != false){
-             echo " Reject";
-             return back()->with('msg', 'Reject');
+            return['status' =>true];
          }
+     }
+     public function authCheck(){
+        $login_type=Auth::user()->login_type;
+
+        return view('navbar',compact('login_type'));
      }
 }

@@ -50,28 +50,31 @@
     <script>
 $(document).ready(function(){
 $("#addform").on('submit',function(e){
-   e.preventDefault();
-   
-   console.log($("#addform").serialize())
+  $('#email').val('')
+  $('#name').val('')
+  $('#password').val('')
+   e.preventDefault(); 
     $.ajax({
         url: "{{route('add-customer')}}", 
         data: $("#addform").serialize(), 
         type: "post", 
-        dataType: 'json',
-        success: function (resp) {
-          console.log(resp)
-          window.location.href ="{{route('customer')}}"
+        success: function (resp) { 
+            if(resp.status){
+              const route = '{{route("customer")}}';
+              window.location.href = route
+            }
             
         },
         error:function(e){
-            var response = e.responseJSON.errors;
-            $.each(response, function(key, val) {
-                console.log(val);
-                $("#" + key + "_error").text(val[0]);
-            })
+        if(e.status === 422){
+          var response = e.responseJSON.errors;
+          console.log(response);
+          $.each(response, function(key, val) {
+              console.log(val);
+              $("#" + key + "_error").text(val[0]);
+          })
 
-
-
+        }
         }
     }); 
     return false;

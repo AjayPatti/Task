@@ -21,7 +21,7 @@
                <?php 
                if($login_type == 'admin') { ?>
                    <a href="{{ route('add') }}" class="btn btn-primary ">Add</a>
-            <?php   }  ?>
+            <?php   } ?>
                
              
                 <div class="row">
@@ -96,7 +96,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-      <form action="#" method="post" class="p-lg-5" id="addform">
+      <form action="#" method="post" class="p-lg-5" id="add-cust">
                 @csrf
           <div class="form-group">
             <!-- <label for="exampleInputEmail1"> Name</label> -->
@@ -114,12 +114,13 @@
             <span id="password_error" class=" text-danger" ></span>
           </div>
        
-        </form>
+      
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
       </div>
+     </form>
     </div>
   </div>
 </div>
@@ -129,21 +130,36 @@
     <script>
     $(document).ready( function () {
     $('#dtExample').DataTable();
+
+    $("#add-cust").on('submit',function(e){
+        alert("sjfhs");
+    e.preventDefault(); 
+        $.ajax({
+            url: "{{route('update')}}", 
+            data: $("#add-cust").serialize(), 
+            type: "post", 
+            success: function (resp) { 
+                if(resp.status){
+                const route = '{{route("customer")}}';
+                window.location.href = route
+                }
+                
+        },
+      
+    }); 
+  
+});
 } )
 function approve(elem){
-    console.log()
 let id =$(elem).data('id');
     $.ajax({
         type: "post",
         url: "{{route('approve-status')}}",
         data: {"_token": "{{ csrf_token() }}", id: id},
-        dataType: "dataType",
         success: function (response) {
-            console.log(response)
-                alert('Approved Successfully done')
-                location.reload()
-
-            
+           if(response.status){
+               location.reload()
+           }  
         }
     });
 }
@@ -167,21 +183,21 @@ function Edit(elem){
    
 }
 function reject(elem){
-    console.log()
 let id =$(elem).data('id');
+if (confirm('Are you sure ?')) {
     $.ajax({
         type: "post",
         url: "{{route('reject')}}",
         data: {"_token": "{{ csrf_token() }}", id: id},
-        dataType: "dataType",
         success: function (response) {
-            console.log(response)
-                alert('Rejected')
-                location.reload()
+           if(response.status){
+               location.reload()
+           }
 
             
         }
     });
+}
 }
 </script>
 </body>

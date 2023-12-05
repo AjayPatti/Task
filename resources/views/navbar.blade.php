@@ -1,7 +1,7 @@
 <nav id="sidebar">
             <div class="sidebar-header">
                 <h1 style="font-size:20px;">
-                    <a href="index.html">Admin-panel</a>
+                    <a href="{{route('home')}}">Admin-panel</a>
                 </h1>
                 <span>M</span>
             </div>
@@ -16,7 +16,7 @@
                     </a>
                 </li>
                
-              
+           
                 <li class="active">
                     <a href="dashborad.php">
                         <i class="fa fa-user" id="cl"></i>CHANGE-PASSWORD

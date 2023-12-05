@@ -22,27 +22,26 @@
   <div class="form-group">
     <!-- <label for="exampleInputEmail1"> Name</label> -->
     <input type="text" class="form-control" name="name"  placeholder="Name">
-  
+    <span id="name_error" class=" text-danger"></span>
   </div>
 
   <div class="form-group">
    <!-- <label for="exampleInputEmail1">Email Id</label> -->
     <input type="email" class="form-control"  name=" email"placeholder="Email Id" >
-  
+    <span id="email_error" class=" text-danger"></span>
   </div><div class="form-group">
     <!-- <label for="exampleInputEmail1">Password</label> -->
-    <input type="text" class="form-control" name="pass"placeholder="Password">
-  
+    <input type="text" class="form-control" name="password"placeholder="Password">
+    <span id="password_error" class=" text-danger"></span>
   </div><div class="form-group">
     <!-- <label for="exampleInputEmail1">Confirm Password</label> -->
-    <input type="text" class="form-control"name="cpass"placeholder="Confirm Password" >
-  
+ 
   </div>
 
   
   <input class="btn btn-primary" type="reset" value="Reset"><a href="Register.php"></a>
   <button type="submit" name="save" class="btn btn-primary" >Submit</button>
-  <input class="btn btn-primary" type="submit" value="back"><a href="online college.php"></a>
+<a href="{{route('login')}}" class="btn btn-primary">Back</a>
 </form>
 
 </div>
@@ -59,20 +58,25 @@ $(document).ready(function(){
 $("#form").on('submit',function(e){
     e.preventDefault();
     $.ajax({
-        url: "{{route('store')}}", 
+        url: "{{ route('register') }}", 
         data: $("#form").serialize(), 
         type: "post", 
-        dataType: 'json',
         success: function (res) {
-     
-            console.log(JSON.stringify(e));
-
-
+            if(resp.status){
+              const route ='{{route("home")}}';
+              window.location.href = route;
+            }
         },
         error:function(e){
-            console.log(JSON.stringify(e));
+        if(e.status === 422){
+          var response = e.responseJSON.errors;
+          console.log(response);
+          $.each(response, function(key, val) {
+              console.log(val);
+              $("#" + key + "_error").text(val[0]);
+          })
 
-
+        }
         }
     }); 
     return false;

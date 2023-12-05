@@ -65,13 +65,13 @@ class LoginController extends Controller
             return redirect($route);
         }
         else{
-            return back()->with('error','Username & Password is incorrect');
+            return back()->with('message','Username & Password is incorrect');
         }
     }
     
     public function loadDashboard()
     {
-        return view('user.dashboard');
+        return view('user.home');
     }
 
 
@@ -86,7 +86,7 @@ class LoginController extends Controller
             $redirect = 'home';
         }
         else{
-            $redirect = '/dashboard';
+            $redirect = '/login';
         }
 
         return $redirect;
